@@ -20,18 +20,18 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: PreferredSize(
-        preferredSize: Size.fromHeight(80), // Altura personalizada
+        preferredSize: const Size.fromHeight(80), // Altura personalizada
         child: Container(
           decoration: BoxDecoration(
             color: AppColors.appBarColor, // Color del fondo
             boxShadow: [
               BoxShadow(
                 color: Colors.black.withOpacity(0.3), // Sombra sutil
-                offset: Offset(0, 3),
+                offset: const Offset(0, 3),
                 blurRadius: 5,
               ),
             ],
-            borderRadius: BorderRadius.vertical(
+            borderRadius: const BorderRadius.vertical(
               bottom: Radius.circular(20), // Bordes redondeados
             ),
           ),
@@ -46,21 +46,21 @@ class HomePage extends StatelessWidget {
                     Container(
                       width: 40, // Tamaño del logo
                       height: 40,
-                      decoration: BoxDecoration(
+                      decoration: const BoxDecoration(
                         shape: BoxShape.circle,
                         color: Colors.white, // Fondo temporal para el logo
                       ),
-                      child: Icon(
+                      child: const Icon(
                         Icons.directions_bus, // Ícono representativo
                         color: AppColors.backgroundColor,
                       ),
                     ),
-                    SizedBox(width: 10),
+                    const SizedBox(width: 10),
                   ],
                 ),
 
                 // Texto centrado
-                Expanded(
+                const Expanded(
                   child: Center(
                     child: Text(
                       "Juan el Mecánico",
@@ -85,17 +85,17 @@ class HomePage extends StatelessWidget {
                   },
                   itemBuilder: (BuildContext context) {
                     return [
-                      PopupMenuItem<String>(
+                      const PopupMenuItem<String>(
                         value: 'configuracion',
                         child: Text('Configuración'),
                       ),
-                      PopupMenuItem<String>(
+                      const PopupMenuItem<String>(
                         value: 'ajustes',
                         child: Text('Ajustes'),
                       ),
                     ];
                   },
-                  icon: Icon(
+                  icon: const Icon(
                     Icons.more_vert,
                     color: Colors.white, // Ícono de menú
                   ),
@@ -105,7 +105,14 @@ class HomePage extends StatelessWidget {
           ),
         ),
       ),
-      body: ViajesApp(), // Ahora, este es el cuerpo del Scaffold
+      body: Column(
+        children: [
+          Expanded(
+            child: ViajesApp(), // Contenido principal
+          ),
+          GestionSection(),
+        ],
+      ), // Ahora, este es el cuerpo del Scaffold
     );
   }
 }
@@ -131,8 +138,8 @@ class _ViajesAppState extends State<ViajesApp> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Padding(
-                  padding: const EdgeInsets.all(16.0),
+                const Padding(
+                  padding: EdgeInsets.all(16.0),
                   child: Text(
                     "Viajes activos",
                     style: TextStyle(
@@ -160,8 +167,8 @@ class _ViajesAppState extends State<ViajesApp> {
           // Sección de detalles del viaje seleccionado
           Expanded(
             child: Container(
-              margin: EdgeInsets.all(16.0),
-              padding: EdgeInsets.all(16.0),
+              margin: const EdgeInsets.all(16.0),
+              padding: const EdgeInsets.all(16.0),
               decoration: BoxDecoration(
                 color: Colors.grey[300],
                 borderRadius: BorderRadius.circular(12),
@@ -171,22 +178,23 @@ class _ViajesAppState extends State<ViajesApp> {
                 children: [
                   Text(
                     selectedViaje,
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  SizedBox(height: 8),
-                  Text("Empresa cliente"),
-                  SizedBox(height: 16),
-                  Text("Estado: Normal"),
-                  SizedBox(height: 16),
-                  Text("Operador(es):"),
-                  SizedBox(height: 16),
-                  Text("Horarios:"),
-                  SizedBox(height: 16),
-                  Text("Ubicaciones:"),
-                  Spacer(),
+                  const SizedBox(height: 8),
+                  const Text("Empresa cliente"),
+                  const SizedBox(height: 16),
+                  const Text("Estado: Normal"),
+                  const SizedBox(height: 16),
+                  const Text("Operador(es):"),
+                  const SizedBox(height: 16),
+                  const Text("Horarios:"),
+                  const SizedBox(height: 16),
+                  const Text("Ubicaciones:"),
+                  const SizedBox(height: 16),
+                  const Spacer(),
                   Align(
                     alignment: Alignment.bottomRight,
                     child: ElevatedButton(
@@ -219,8 +227,8 @@ class _ViajesAppState extends State<ViajesApp> {
         });
       },
       child: Container(
-        margin: EdgeInsets.symmetric(vertical: 4, horizontal: 8),
-        padding: EdgeInsets.all(12),
+        margin: const EdgeInsets.symmetric(vertical: 4, horizontal: 8),
+        padding: const EdgeInsets.all(12),
         decoration: BoxDecoration(
           color: Colors.grey[200],
           borderRadius: BorderRadius.circular(8),
@@ -234,18 +242,136 @@ class _ViajesAppState extends State<ViajesApp> {
           children: [
             Text(
               title,
-              style: TextStyle(
+              style: const TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.bold,
               ),
             ),
-            SizedBox(height: 4),
+            const SizedBox(height: 4),
             Text(
               subtitle,
               style: TextStyle(fontSize: 14, color: Colors.grey[700]),
             ),
           ],
         ),
+      ),
+    );
+  }
+
+  // Botón de gestión
+  Widget _gestionButton({
+    required BuildContext context,
+    required IconData icon,
+    required String label,
+    required VoidCallback onPressed,
+  }) {
+    return Column(
+      children: [
+        IconButton(
+          icon: Icon(icon, size: 28),
+          onPressed: onPressed,
+        ),
+        Text(label, style: TextStyle(fontSize: 12)),
+      ],
+    );
+  }
+}
+
+class GestionSection extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      color: Colors.white, // Fondo blanco para un diseño más limpio
+      padding: const EdgeInsets.all(16.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const Text(
+            "Sección de gestión",
+            style: TextStyle(
+              fontSize: 18,
+              fontWeight: FontWeight.bold,
+              color: Colors.black87,
+            ),
+          ),
+          const SizedBox(height: 16),
+          SingleChildScrollView(
+            scrollDirection: Axis
+                .horizontal, // Permitir desplazamiento horizontal si es necesario
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                ElevatedButton.icon(
+                  onPressed: () {
+                    // Acción para el botón de camiones
+                  },
+                  icon: const Icon(Icons.directions_car, color: Colors.white),
+                  label: const Text(
+                    "Camiones",
+                    style: TextStyle(color: Colors.white),
+                  ),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.indigo,
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 48, vertical: 32),
+                    minimumSize: const Size(150, 50),
+                  ),
+                ),
+                const SizedBox(width: 16), // Separación entre botones
+                ElevatedButton.icon(
+                  onPressed: () {
+                    // Acción para el botón de clientes
+                  },
+                  icon: const Icon(Icons.person, color: Colors.white),
+                  label: const Text(
+                    "Operadores",
+                    style: TextStyle(color: Colors.white),
+                  ),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.indigo,
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 48, vertical: 32),
+                    minimumSize: const Size(150, 50),
+                  ),
+                ),
+                const SizedBox(width: 16),
+                ElevatedButton.icon(
+                  onPressed: () {
+                    // Acción para el botón de reparaciones
+                  },
+                  icon: const Icon(Icons.build, color: Colors.white),
+                  label: const Text(
+                    "Reparaciones",
+                    style: TextStyle(color: Colors.white),
+                  ),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.indigo,
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 48, vertical: 32),
+                    minimumSize: const Size(150, 50),
+                  ),
+                ),
+                const SizedBox(width: 16),
+                ElevatedButton.icon(
+                  onPressed: () {
+                    // Acción para el botón de mecánicos
+                  },
+                  icon: const Icon(Icons.engineering, color: Colors.white),
+                  label: const Text(
+                    "Mecánicos",
+                    style: TextStyle(color: Colors.white),
+                  ),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.indigo,
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 48, vertical: 32),
+                    minimumSize: const Size(150, 50),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
       ),
     );
   }
