@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'app_colors.dart';
+import 'detalles.dart';
 
 void main() {
   runApp(MyApp());
@@ -199,7 +200,11 @@ class _ViajesAppState extends State<ViajesApp> {
                     alignment: Alignment.bottomRight,
                     child: ElevatedButton(
                       onPressed: () {
-                        // Acción para ver detalles
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => DetallesPage()),
+                        ); // Acción para ver detalles
                       },
                       child: Text("Ver detalles"),
                       style: ElevatedButton.styleFrom(
@@ -280,98 +285,108 @@ class _ViajesAppState extends State<ViajesApp> {
 class GestionSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      color: Colors.white, // Fondo blanco para un diseño más limpio
-      padding: const EdgeInsets.all(16.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const Text(
-            "Sección de gestión",
-            style: TextStyle(
-              fontSize: 18,
-              fontWeight: FontWeight.bold,
-              color: Colors.black87,
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 16.0), // Espacio inferior
+      child: Container(
+        color: Colors.blue[100], // Fondo blanco para un diseño más limpio
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const Text(
+              "Sección de gestión",
+              style: TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+                color: Colors.black87,
+              ),
             ),
-          ),
-          const SizedBox(height: 16),
-          SingleChildScrollView(
-            scrollDirection: Axis
-                .horizontal, // Permitir desplazamiento horizontal si es necesario
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                ElevatedButton.icon(
-                  onPressed: () {
-                    // Acción para el botón de camiones
-                  },
-                  icon: const Icon(Icons.directions_car, color: Colors.white),
-                  label: const Text(
-                    "Camiones",
-                    style: TextStyle(color: Colors.white),
+            const SizedBox(height: 16),
+            SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  ElevatedButton.icon(
+                    onPressed: () {
+                      showModalBottomSheet(
+                        context: context,
+                        shape: const RoundedRectangleBorder(
+                          borderRadius:
+                              BorderRadius.vertical(top: Radius.circular(20)),
+                        ),
+                        builder: (BuildContext context) {
+                          return Container(
+                            padding: const EdgeInsets.all(16.0),
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                const Text(
+                                  "Camiones",
+                                  style: TextStyle(
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                                const SizedBox(height: 16),
+                                Expanded(
+                                  child: ListView.builder(
+                                    shrinkWrap: true,
+                                    itemCount:
+                                        0, // Por ahora la lista está vacía
+                                    itemBuilder: (context, index) {
+                                      return ListTile(
+                                        title: Text("Elemento $index"),
+                                      );
+                                    },
+                                  ),
+                                ),
+                                const SizedBox(height: 8),
+                                const Text(
+                                  "Actualmente no hay camiones en la lista.",
+                                  style: TextStyle(color: Colors.grey),
+                                ),
+                              ],
+                            ),
+                          );
+                        },
+                      );
+                    },
+                    icon: const Icon(Icons.directions_car, color: Colors.white),
+                    label: const Text(
+                      "Camiones",
+                      style: TextStyle(color: Colors.white),
+                    ),
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.indigo,
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 48, vertical: 32),
+                      minimumSize: const Size(150, 50),
+                    ),
                   ),
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.indigo,
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 48, vertical: 32),
-                    minimumSize: const Size(150, 50),
+                  const SizedBox(width: 16), // Separación entre botones
+                  ElevatedButton.icon(
+                    onPressed: () {
+                      // Acción para el botón
+                    },
+                    icon: const Icon(Icons.person, color: Colors.white),
+                    label: const Text(
+                      "Operadores",
+                      style: TextStyle(color: Colors.white),
+                    ),
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.indigo,
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 48, vertical: 32),
+                      minimumSize: const Size(150, 50),
+                    ),
                   ),
-                ),
-                const SizedBox(width: 16), // Separación entre botones
-                ElevatedButton.icon(
-                  onPressed: () {
-                    // Acción para el botón de clientes
-                  },
-                  icon: const Icon(Icons.person, color: Colors.white),
-                  label: const Text(
-                    "Operadores",
-                    style: TextStyle(color: Colors.white),
-                  ),
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.indigo,
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 48, vertical: 32),
-                    minimumSize: const Size(150, 50),
-                  ),
-                ),
-                const SizedBox(width: 16),
-                ElevatedButton.icon(
-                  onPressed: () {
-                    // Acción para el botón de reparaciones
-                  },
-                  icon: const Icon(Icons.build, color: Colors.white),
-                  label: const Text(
-                    "Reparaciones",
-                    style: TextStyle(color: Colors.white),
-                  ),
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.indigo,
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 48, vertical: 32),
-                    minimumSize: const Size(150, 50),
-                  ),
-                ),
-                const SizedBox(width: 16),
-                ElevatedButton.icon(
-                  onPressed: () {
-                    // Acción para el botón de mecánicos
-                  },
-                  icon: const Icon(Icons.engineering, color: Colors.white),
-                  label: const Text(
-                    "Mecánicos",
-                    style: TextStyle(color: Colors.white),
-                  ),
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.indigo,
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 48, vertical: 32),
-                    minimumSize: const Size(150, 50),
-                  ),
-                ),
-              ],
+                ],
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
