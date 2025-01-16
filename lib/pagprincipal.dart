@@ -503,6 +503,7 @@ class _HistorialFallasScreenState extends State<HistorialFallasScreen> {
   @override
   void initState() {
     super.initState();
+    print('ID: ${widget.camionId}');
     fetchFallas();
   }
 
@@ -515,8 +516,8 @@ class _HistorialFallasScreenState extends State<HistorialFallasScreen> {
         .collection('camiones')
         .doc(widget.camionId)
         .collection('fallas')
-        .orderBy('tiempo',
-            descending: true) // Ordenar por tiempo (más reciente primero)
+        /*.orderBy('tiempo',
+            descending: true)*/ // Ordenar por tiempo (más reciente primero)
         .get();
 
     List<Map<String, dynamic>> fallasList = [];
